@@ -91,3 +91,16 @@ echo "   $CONTAINER_URL/fetch?url=https://httpbin.org/json&api_key=$API_KEY"
 echo
 echo "💡 Este método es más confiable que App Service"
 echo "   y debería funcionar sin problemas."
+echo
+echo "🌐 CONFIGURACIÓN DE DOMINIO PERSONALIZADO"
+echo "========================================"
+echo "Para usar proxy.azurebrains.com:"
+echo "1. Configura un registro CNAME en tu DNS:"
+echo "   CNAME proxy.azurebrains.com -> $FQDN"
+echo "2. O un registro A apuntando a la IP del contenedor"
+echo "3. Considera usar Azure Front Door para HTTPS y dominio personalizado"
+echo
+echo "📊 Monitoreo:"
+echo "   • /healthz - Estado del servicio"
+echo "   • /metrics - Métricas de Prometheus"
+echo "   • /security-info - Configuración de seguridad"

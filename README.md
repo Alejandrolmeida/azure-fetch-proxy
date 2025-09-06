@@ -1,11 +1,12 @@
-# 🚀 Azure FastAPI Fetch Proxy
+# 🚀 AzureBrains Fetch Proxy
 
 [![Azure Container Instances](https://img.shields.io/badge/Azure-Container%20Instances-blue)](https://azure.microsoft.com/en-us/services/container-instances/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![AzureBrains](https://img.shields.io/badge/AzureBrains-proxy.azurebrains.com-orange)](https://proxy.azurebrains.com)
 
-A production-ready HTTP fetch proxy built with FastAPI, optimized for ChatGPT integration and deployed on Azure Container Instances.
+A production-ready HTTP fetch proxy built with FastAPI, optimized for ChatGPT integration and deployed at **proxy.azurebrains.com**.
 
 **Perfect for ChatGPT**: This proxy enables AI assistants to access and analyze web content by bypassing common bot restrictions and providing a secure, rate-limited endpoint.
 
@@ -85,6 +86,26 @@ This script will:
 4. Configure environment variables
 5. Provide the public endpoint URL
 
+#### 🌐 Custom Domain Setup (proxy.azurebrains.com)
+
+After deployment, you can configure the custom domain:
+
+1. **Basic DNS Setup** (HTTP only):
+   ```bash
+   # Add CNAME record in your DNS:
+   # proxy.azurebrains.com -> your-container-url.westeurope.azurecontainer.io
+   ```
+
+2. **Azure Front Door** (HTTPS + CDN - Recommended):
+   See detailed instructions in `CUSTOM_DOMAIN_SETUP.md`
+
+3. **Test your custom domain**:
+   ```bash
+   curl "https://proxy.azurebrains.com/healthz"
+   ```
+
+> 📋 **Complete Guide**: Check `CUSTOM_DOMAIN_SETUP.md` for detailed custom domain configuration.
+
 ## 🔧 Configuration
 
 ### Environment Variables
@@ -101,11 +122,12 @@ This script will:
 ### Example Configuration
 
 ```bash
-# Production security settings
+# Production security settings for proxy.azurebrains.com
 export API_KEY="super-secure-key-123"
 export ALLOWED_HOSTS="api.github.com,docs.python.org,httpbin.org"
 export MAX_REQUESTS_PER_MINUTE=50
 export MAX_RESPONSE_SIZE_MB=10
+export CUSTOM_DOMAIN="proxy.azurebrains.com"
 ```
 
 ## 📚 API Reference
@@ -149,7 +171,7 @@ This proxy is specifically optimized for AI assistants like ChatGPT:
 
 ### Usage Format
 ```
-https://your-container-url.westeurope.azurecontainer.io/fetch?url=TARGET_URL&api_key=YOUR_API_KEY
+https://proxy.azurebrains.com/fetch?url=TARGET_URL&api_key=YOUR_API_KEY
 ```
 
 ### Example ChatGPT Prompts
@@ -157,13 +179,13 @@ https://your-container-url.westeurope.azurecontainer.io/fetch?url=TARGET_URL&api
 **Analyze GitHub Repository:**
 ```
 Analyze this GitHub repository and summarize its key information:
-https://your-container-url.westeurope.azurecontainer.io/fetch?url=https://api.github.com/repos/microsoft/vscode&api_key=YOUR_API_KEY
+https://proxy.azurebrains.com/fetch?url=https://api.github.com/repos/microsoft/vscode&api_key=YOUR_API_KEY
 ```
 
 **Research Documentation:**
 ```
 Read this Python documentation and explain the main concepts:
-https://your-container-url.westeurope.azurecontainer.io/fetch?url=https://docs.python.org/3/library/asyncio.html&api_key=YOUR_API_KEY
+https://proxy.azurebrains.com/fetch?url=https://docs.python.org/3/library/asyncio.html&api_key=YOUR_API_KEY
 ```
 
 ## 🛡️ Security Features
@@ -208,6 +230,7 @@ pytest tests/test_fetch.py -v     # Core functionality tests
 ├── main.py                 # FastAPI application
 ├── Dockerfile             # Container configuration
 ├── deploy_container.sh     # Azure deployment script
+├── CUSTOM_DOMAIN_SETUP.md  # Custom domain configuration guide
 ├── requirements.txt       # Python dependencies
 ├── runtime.txt            # Python version specification
 ├── .env.example           # Environment variables template
@@ -254,7 +277,9 @@ For issues and questions:
 - Open a GitHub issue
 - Check the `/security-info` endpoint for configuration
 - Review logs for detailed error information
+- Visit [proxy.azurebrains.com](https://proxy.azurebrains.com) for live service
 
 ---
 
-**Made with ❤️ for the AI community**
+**Made with ❤️ by AzureBrains - Powering the AI community**  
+🌐 **Live at**: [proxy.azurebrains.com](https://proxy.azurebrains.com)

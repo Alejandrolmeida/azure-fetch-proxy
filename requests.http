@@ -1,5 +1,9 @@
 
-### Azure FastAPI Fetch Proxy - Enhanced Test Requests
+### AzureBrains Fetch Proxy - Test Requests
+
+# ============================================
+# 🚀 LOCAL DEVELOPMENT (localhost:8000)
+# ============================================
 
 ### Health Check
 GET http://localhost:8000/healthz
@@ -11,16 +15,32 @@ GET http://localhost:8000/metrics
 GET http://localhost:8000/
 
 ### Basic GET Request
-GET http://localhost:8000/fetch?url=https://httpbin.org/get
+GET http://localhost:8000/fetch?url=https://httpbin.org/get&api_key=your-secure-api-key
 
 ### Mobile User Agent
-GET http://localhost:8000/fetch?url=https://httpbin.org/user-agent&ua=mobile
+GET http://localhost:8000/fetch?url=https://httpbin.org/user-agent&ua=mobile&api_key=your-secure-api-key
 
 ### HEAD Request  
-GET http://localhost:8000/fetch?url=https://httpbin.org/get&method=HEAD
+GET http://localhost:8000/fetch?url=https://httpbin.org/get&method=HEAD&api_key=your-secure-api-key
 
-### POST Request with JSON Body
-POST http://localhost:8000/fetch?url=https://httpbin.org/post&method=POST
+# ============================================
+# 🌐 PRODUCTION (proxy.azurebrains.com)
+# ============================================
+
+### Production Health Check
+GET https://proxy.azurebrains.com/healthz
+
+### Production Security Info
+GET https://proxy.azurebrains.com/security-info?api_key=your-secure-api-key
+
+### ChatGPT Ready - GitHub API
+GET https://proxy.azurebrains.com/fetch?url=https://api.github.com/repos/microsoft/vscode&api_key=your-secure-api-key
+
+### ChatGPT Ready - Python Docs
+GET https://proxy.azurebrains.com/fetch?url=https://docs.python.org/3/library/asyncio.html&api_key=your-secure-api-key
+
+### Production POST Request
+POST https://proxy.azurebrains.com/fetch?url=https://httpbin.org/post&method=POST&api_key=your-secure-api-key
 Content-Type: application/json
 
 {
