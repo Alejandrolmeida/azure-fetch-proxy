@@ -1,0 +1,27 @@
+runtime: python-3.12
+
+env_variables:
+  API_KEY: "your-secure-api-key"
+  ALLOWED_HOSTS: "httpbin.org,api.github.com"
+  BLOCKED_HOSTS: "localhost,127.0.0.1,169.254.169.254"
+  LOG_LEVEL: "INFO"
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 3
+  cool_down_period_sec: 120
+  cpu_utilization:
+    target_utilization: 0.6
+
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+health_check:
+  enable_health_check: true
+  check_interval_sec: 30
+  timeout_sec: 4
+  unhealthy_threshold: 2
+  healthy_threshold: 2
+  restart_threshold: 60

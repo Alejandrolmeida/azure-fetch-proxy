@@ -1,0 +1,76 @@
+
+### Azure FastAPI Fetch Proxy - Enhanced Test Requests
+
+### Health Check
+GET http://localhost:8000/healthz
+
+### Metrics Endpoint
+GET http://localhost:8000/metrics
+
+### Root Documentation
+GET http://localhost:8000/
+
+### Basic GET Request
+GET http://localhost:8000/fetch?url=https://httpbin.org/get
+
+### Mobile User Agent
+GET http://localhost:8000/fetch?url=https://httpbin.org/user-agent&ua=mobile
+
+### HEAD Request  
+GET http://localhost:8000/fetch?url=https://httpbin.org/get&method=HEAD
+
+### POST Request with JSON Body
+POST http://localhost:8000/fetch?url=https://httpbin.org/post&method=POST
+Content-Type: application/json
+
+{
+  "test": "data",
+  "enhanced": true
+}
+
+### Forward Headers (Conditional Request)
+GET http://localhost:8000/fetch?url=https://httpbin.org/etag/test123&forward_headers=if-none-match
+If-None-Match: "test123"
+
+### Try AMP Variant
+GET http://localhost:8000/fetch?url=https://example.com/article&try_amp=true
+
+### Custom Accept Header
+GET http://localhost:8000/fetch?url=https://httpbin.org/json&accept=application/json
+
+### Custom Language
+GET http://localhost:8000/fetch?url=https://httpbin.org/get&lang=en-US,en;q=0.9
+
+### With API Key (if API_KEY env var is set)
+GET http://localhost:8000/fetch?url=https://httpbin.org/get
+x-api-key: your-secret-key
+
+### Test SSRF Protection - Private IP (should fail)
+GET http://localhost:8000/fetch?url=http://192.168.1.1
+
+### Test SSRF Protection - Localhost (should fail) 
+GET http://localhost:8000/fetch?url=http://127.0.0.1:8000/healthz
+
+### Test SSRF Protection - Cloud Metadata (should fail)
+GET http://localhost:8000/fetch?url=http://169.254.169.254/latest/meta-data/
+
+### Test Host Blocklist (if BLOCKED_HOSTS env var is set)
+GET http://localhost:8000/fetch?url=http://blocked-site.com
+
+### Test Cache - Same request twice (second should be faster with X-Cache: HIT)
+GET http://localhost:8000/fetch?url=https://httpbin.org/cache/60
+
+### Test Cache - Same request again
+GET http://localhost:8000/fetch?url=https://httpbin.org/cache/60
+
+### Test PDF Content-Disposition
+GET http://localhost:8000/fetch?url=https://httpbin.org/response-headers?content-type=application/pdf
+
+### Test Image Content-Disposition  
+GET http://localhost:8000/fetch?url=https://httpbin.org/response-headers?content-type=image/jpeg
+
+### Fetch example.com
+GET http://localhost:8000/fetch?url=https://example.com
+
+### Mobile UA + AMP
+GET http://localhost:8000/fetch?url=https://www.bbc.com/news&ua=mobile&try_amp=true

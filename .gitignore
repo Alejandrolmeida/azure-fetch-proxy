@@ -4,6 +4,9 @@ __pycache__/
 *.pyc
 .venv/
 
+# Environment files (keep .env.example, ignore .env)
+.env
+
 # VSCode
 .vscode/
 
