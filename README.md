@@ -1,14 +1,15 @@
 # 🚀 AzureBrains Fetch Proxy
 
 [![Azure Container Instances](https://img.shields.io/badge/Azure-Container%20Instances-blue)](https://azure.microsoft.com/en-us/services/container-instances/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 [![AzureBrains](https://img.shields.io/badge/AzureBrains-proxy.azurebrains.com-orange)](https://proxy.azurebrains.com)
 
-A production-ready HTTP fetch proxy built with FastAPI, optimized for ChatGPT integration and deployed at **proxy.azurebrains.com**.
+A production-ready HTTP fetch proxy with **Spanish geolocation simulation**, built with Python's BaseHTTPServer and deployed at **proxy.azurebrains.com**.
 
-**Perfect for ChatGPT**: This proxy enables AI assistants to access and analyze web content by bypassing common bot restrictions and providing a secure, rate-limited endpoint.
+**Perfect for ChatGPT**: This proxy enables AI assistants to access and analyze web content by simulating Spanish geolocation and providing realistic headers to bypass common bot restrictions.
+
+🇪🇸 **Spanish Geolocation Simulation**: Automatically adds Spanish headers including realistic ISP information, regional data, and client location to appear as if requests are coming from Spain.
 
 > ⚠️ **Use Responsibly**: Do not use this to bypass paywalls, authentication, or legal restrictions. Respect robots.txt and target websites' Terms of Service.
 
@@ -20,17 +21,23 @@ A production-ready HTTP fetch proxy built with FastAPI, optimized for ChatGPT in
 - **Rate Limiting**: 100 requests/minute, 2000 requests/hour per IP
 - **Response Size Limits**: Configurable maximum response size (15MB default)
 
-### ⚡ Performance & Reliability
-- **Smart Caching**: In-memory LRU cache with 120-second TTL
-- **Connection Pooling**: HTTP/2 support with optimized connections
-- **Intelligent Retries**: Automatic retry on transient failures
-- **Content Decompression**: Ensures proper display in browsers
+### 🇪🇸 Spanish Geolocation Features
+- **Realistic Spanish ISPs**: Rotates between Telefónica, Orange, Vodafone, Euskaltel, Jazztel
+- **Regional Simulation**: Madrid, Barcelona, Valencia, Sevilla, Bilbao locations
+- **Spanish Headers**: Adds X-Spanish-Region, X-Client-Location, X-ISP headers
+- **Anti-Bot Evasion**: Realistic User-Agent and Accept-Language headers
+
+### ⚡ Performance & Reliability  
+- **HTTP/2 Support**: Modern protocol support with optimized connections
+- **Intelligent Retries**: Automatic retry on transient failures with backoff
+- **Content Processing**: Proper encoding handling and content decompression
+- **Connection Reuse**: Efficient session management for better performance
 
 ### 📊 Monitoring & Observability
-- **Health Checks**: `/healthz` endpoint for monitoring
-- **Prometheus Metrics**: `/metrics` endpoint with detailed statistics
-- **Structured Logging**: Request IDs, timing, response sizes
-- **Security Info**: `/security-info` endpoint for configuration verification
+- **Health Checks**: `/health` endpoint for container monitoring
+- **Request Logging**: Detailed logging with timing and response information
+- **Error Tracking**: Comprehensive error handling and reporting
+- **Security Auditing**: API key validation and rate limiting logs
 
 ## 🚀 Quick Start
 
@@ -52,7 +59,7 @@ A production-ready HTTP fetch proxy built with FastAPI, optimized for ChatGPT in
 
 3. **Start the server:**
    ```bash
-   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   python secure_proxy.py
    ```
 
 4. **Test the proxy:**

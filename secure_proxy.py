@@ -1,8 +1,31 @@
 #!/usr/bin/env python3
 """
-Secure HTTP Proxy for ChatGPT with Spanish Geolocation Simulation
-Usage: python secure_proxy.py
-Then use: http://localhost:8000/fetch?url=https://example.com&api_key=YOUR_API_KEY
+AzureBrains Secure HTTP Proxy with Spanish Geolocation Simulation
+
+This proxy server simulates Spanish geolocation by adding realistic headers
+for Spanish ISPs and regions. It's designed to bypass bot detection while
+maintaining ethical usage standards.
+
+Features:
+- Spanish ISP rotation (Telefónica, Orange, Vodafone, Euskaltel, Jazztel)
+- Regional Spanish locations (Madrid, Barcelona, Valencia, Sevilla, Bilbao)
+- API key authentication and rate limiting
+- Health monitoring endpoint
+- Production-ready logging and error handling
+
+Usage:
+    python secure_proxy.py
+    
+    Then make requests to:
+    http://localhost:8000/fetch?url=https://example.com&api_key=YOUR_API_KEY
+
+Environment Variables:
+    API_KEY: Required API key for authentication
+    SERVER_PORT: Server port (default: 8000)
+    MAX_REQUESTS_PER_MINUTE: Rate limit per IP (default: 30)
+
+Author: AzureBrains Team
+Version: 2.0.0
 """
 
 import socket
