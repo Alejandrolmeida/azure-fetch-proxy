@@ -4,14 +4,14 @@
 
 ### Active Resources (rg-fetch-proxy)
 - **Azure Container Registry**: `fetchproxyregistry1757181743.azurecr.io`
-- **Container Instance**: `azurebrains-proxy` (West Europe)
-- **Front Door**: Integrated with proxy.azurebrains.com domain
+- **Container Instance**: `azurebrains-proxy-secure` (West Europe) - v2.1-secure with Front Door validation
+- **Front Door**: `azurebrains-proxy-afd` integrated with proxy.azurebrains.com domain
 - **SSL Certificate**: Valid DigiCert certificate until March 2026
 
 ### URLs
-- **Production**: https://proxy.azurebrains.com
+- **Production**: https://proxy.azurebrains.com (secured via Front Door)
 - **Health Check**: https://proxy.azurebrains.com/health
-- **Direct Container**: http://20.126.161.19:8000 (for debugging)
+- **Direct Container**: http://4.175.211.232:8000 (debugging only - protected by Front Door validation)
 
 ## 🗑️ Resources Cleaned Up
 

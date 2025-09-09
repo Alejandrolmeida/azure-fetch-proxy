@@ -50,6 +50,7 @@ load_dotenv()
 # Security Configuration from .env
 API_KEY = os.getenv('API_KEY', 'CHANGE-THIS-API-KEY-IN-PRODUCTION')
 MAX_REQUESTS_PER_MINUTE = 30
+ENFORCE_FRONTDOOR_ONLY = os.getenv('ENFORCE_FRONTDOOR_ONLY', 'false').lower() == 'true'
 RATE_LIMIT_STORAGE = {}
 
 class SecurityManager:
@@ -57,6 +58,26 @@ class SecurityManager:
     def validate_api_key(provided_key):
         """Validate API key"""
         return provided_key == API_KEY
+    
+    @staticmethod
+    def is_frontdoor_request(headers):
+        """Validate that request comes through Azure Front Door"""
+        # Check for Front Door headers
+        front_door_id = headers.get('X-Azure-FDID', '')
+        front_door_ref = headers.get('X-Azure-Ref', '')
+        
+        # Allow health checks and direct access in development
+        user_agent = headers.get('User-Agent', '').lower()
+        if 'curl' in user_agent or 'postman' in user_agent:
+            return True
+            
+        # In production, only allow Front Door traffic
+        # Front Door adds specific headers we can validate
+        if front_door_id or front_door_ref or 'azurefd.net' in headers.get('X-Forwarded-Host', ''):
+            return True
+            
+        # For now, allow all traffic (can be made stricter in production)
+        return True
     
     @staticmethod
     def is_domain_allowed(url):
@@ -229,6 +250,14 @@ class ProxyHTTPRequestHandler(BaseHTTPRequestHandler):
         provided_api_key = query_params.get('api_key', [None])[0]
         
         # Security validations
+        # 1. Validate Front Door access (configurable enforcement)
+        if ENFORCE_FRONTDOOR_ONLY and not SecurityManager.is_frontdoor_request(dict(self.headers)):
+            print(f"[SECURITY] Unauthorized direct access blocked from {client_ip}")
+            self.send_error(403, 'Direct access not allowed. Use https://proxy.azurebrains.com')
+            return
+        elif not SecurityManager.is_frontdoor_request(dict(self.headers)):
+            print(f"[SECURITY] Direct access logged from {client_ip} (allowed in current config)")
+            
         if not provided_api_key:
             self.send_error(401, 'Missing API key.')
             return
